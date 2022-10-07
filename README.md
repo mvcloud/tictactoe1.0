@@ -11,7 +11,7 @@ bar to continue playing. It also lets the user know who won.
 - Programming Language: Python
 
 - Features I am hoping to implement:
-1. counting number of wins
+1. counting number of wins/ties [IMPLEMENTED]
 2. choice of color scheme
 3. enter player names
 
