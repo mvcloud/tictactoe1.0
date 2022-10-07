@@ -34,17 +34,31 @@ def draw_chips():
 
 def draw_game_over():
     screen.fill(BG_COLOR)
+    # display winner
     if winner != 0:
         game_over_surf = game_over_font.render(f"Player {winner} wins the game!", 1, LINE_COLOR)
     else:
         game_over_surf = game_over_font.render("No one wins this game!", 1, LINE_COLOR)
 
-    game_over_rect = game_over_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 80))
+    game_over_rect = game_over_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 120))
     screen.blit(game_over_surf, game_over_rect)
 
+    # display number of wins and ties
+    num_wins_player_1_surf = game_over_font.render(f"Player 1 wins: {player_1_wins}", 1, LINE_COLOR)
+    num_wins_player_1_rect = num_wins_player_1_surf.get_rect(center=(WIDTH //2, HEIGHT // 2 - 40))
+    screen.blit(num_wins_player_1_surf, num_wins_player_1_rect)
 
+    num_wins_player_2_surf = game_over_font.render(f"Player 2 wins: {player_2_wins}", 1, LINE_COLOR)
+    num_wins_player_2_rect = num_wins_player_2_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(num_wins_player_2_surf, num_wins_player_2_rect)
+
+    num_ties_surf = game_over_font.render(f"Ties: {num_ties}", 1, LINE_COLOR)
+    num_ties_rect = num_ties_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 40))
+    screen.blit(num_ties_surf, num_ties_rect)
+
+    # display restart game text
     restart_surf = game_over_font.render("Press space to restart game...", 1, LINE_COLOR)
-    restart_rect = restart_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
+    restart_rect = restart_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 120))
     screen.blit(restart_surf, restart_rect)
 
 # initialize the pygame state
@@ -56,6 +70,9 @@ board = initialize_board()
 player = 1
 game_over = False
 winner = 0
+num_ties = 0
+player_1_wins = 0
+player_2_wins = 0
 
 # event loop
 while True:
@@ -73,9 +90,14 @@ while True:
                 if check_if_winner(board, chip):
                     game_over = True
                     winner = 1 if player == 1 else 2
+                    if winner == 1:
+                        player_1_wins += 1
+                    elif winner == 2:
+                        player_2_wins += 1
                 else:
                     if board_is_full(board):
                         game_over = True
+                        num_ties += 1
                         winner = 0
 
                 #alternate between player 1 and 2
