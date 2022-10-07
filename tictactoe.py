@@ -59,43 +59,5 @@ def board_is_full(board):
 def is_available(board, row, col):
     return board[row][col] == "-"
 
-
-if __name__ == "__main__":
-    print("Player 1: x\nPlayer 2: o\n")
-    board = initialize_board()
-    print_board(board)
-
-    chip = "x"
-    player = 1
-
-    while True:
-        print(f"\nPlayer {player}'s Turn ({chip}): ")
-        row = int(input("Enter a row number (0, 1, or 2): "))
-        col = int(input("Enter a column number (0, 1, or 2): "))
-
-        while not is_valid(board, row, col):
-            if row < 0 or col < 0 or row >= 3 or col >= 3:
-                print("This position is off the bounds of the board! Try again.")
-            else:
-                print("Someone has already made a move at this position! Try again.")
-            row = int(input("Enter a row number (0, 1, or 2): "))
-            col = int(input("Enter a column number (0, 1, or 2): "))
-
-        mark_square(board, row, col, player)
-        print_board(board)
-        if check_if_winner(board, chip) == True:
-            if chip == "x":
-                print("\nPlayer 1 has won!")
-                break
-            else:
-                print("\nPlayer 2 has won!")
-                break
-
-        else:
-            if board_is_full(board):
-                print("It's a tie!")
-                break
-
-        player = 2 if player == 1 else 1
-        chip = "o" if chip == "x" else "x"
+ 
 
